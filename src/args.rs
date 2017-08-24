@@ -2,8 +2,8 @@
 use super::consts::*;
 use std::env::ArgsOs;
 use std::ops::{Deref, DerefMut};
-pub use fluent_validator::Error as ValidatorError;
-use fluent_validator::Validator;
+use assayer::Error as AssayerError;
+use assayer::Validator;
 
 //Newtype Args wrapper around Vec<String> necessary to implement Validator<Args>.
 #[derive(Clone, Debug)]
@@ -38,7 +38,7 @@ impl From<ArgsOs> for Args {
 }
 
 impl Validator<Args> for Args {
-    fn validate(value: Args) -> Result<Self, ValidatorError> {
+    fn validate(value: Args) -> Result<Self, AssayerError> {
         Ok(value)
     }
 }

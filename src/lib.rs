@@ -4,20 +4,20 @@
 #![warn(missing_debug_implementations, trivial_casts, trivial_numeric_casts, unused_import_braces, unused_qualifications)]
 #![deny(unused_must_use, overflowing_literals)]
 
-extern crate fluent_validator;
+extern crate assayer;
 
 #[cfg(test)] mod unit_tests;
 mod consts;
 mod args;
 mod error;
 
-use fluent_validator::FluentValidator;
+use assayer::MethodSyntaxValidator;
 pub use consts::*;
 pub use error::Error;
 pub use args::Args;
 
 pub fn run(args: Args) -> Result<(), Error> {
-    args.clone().validate::<Args>()?;   //TODO: Make fluent_validator::validate() non-consuming
+    args.validate::<Args>()?;
     println!("Hello, {}-bit world!", 0usize.count_zeros());
     Ok(())
 }

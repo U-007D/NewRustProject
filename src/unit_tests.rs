@@ -5,4 +5,4 @@ use super::*;
 fn empty_test() {}
 
 #[test]
-fn () {}
+fn() {}

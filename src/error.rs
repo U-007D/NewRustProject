@@ -1,22 +1,23 @@
-use super::consts::*;
-use super::fluent_validator;
+use consts::*;
+use assayer::Error as AssayerError;
 use std::error::Error as StdError;
 use std::fmt;
 
+#[derive(Debug, PartialEq)]
 pub enum Error {
-    ValidatorError(fluent_validator::Error),
+    Validation(AssayerError),
 }
 
 impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
-            Error::ValidatorError(_) => ERR_FLUENT_VALIDATION,
+            Error::Validation(_) => MSG_ERR_VALIDATION,
         }
     }
 
     fn cause(&self) -> Option<&StdError> {
         match *self {
-            Error::ValidatorError(ref inner_err) => Some(inner_err),
+            Error::Validation(ref inner_err) => Some(inner_err),
         }
     }
 }
@@ -25,15 +26,8 @@ impl StdError for Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            Error::ValidatorError(ref msg) => f.write_str(&err_msg(ERR_VALIDATION, self.description())),
+            Error::Validation(ref msg) => f.write_str(&err_msg(MSG_ERR_VALIDATION, self.description())),
         }
-    }
-}
-
-//#[allow(dead_code)]
-impl fmt::Debug for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-        fmt::Display::fmt(&self, f)
     }
 }
 
@@ -41,6 +35,6 @@ fn err_msg(err_name: &str, err_detail: &str)-> String {
     format!("{}: {}!", err_name, err_detail)
 }
 
-impl From<fluent_validator::Error> for Error {
-    fn from(error: fluent_validator::Error) -> Self { Error::ValidatorError(error) }
+impl From<AssayerError> for Error {
+    fn from(error: AssayerError) -> Self { Error::Validation(error) }
 }

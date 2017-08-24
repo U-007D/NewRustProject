@@ -1,12 +1,12 @@
 [package]
 authors = ["bRad <brad@humanenginuity.com>"]
 name = "RustQuickstartTemplate"
-version = "3.0.0"
+version = "0.1.0"
 
 [dependencies]
 
-[dependencies.fluent_validator]
-git = "https://github.com/humanenginuity/fluent_validator"
+[dependencies.assayer]
+git = "https://github.com/humanenginuity/assayer"
 optional = false
 
 [profile]
